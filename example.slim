@@ -1,0 +1,42 @@
+doctype html
+html
+	head
+		title Slim Core Example
+		meta name="keywords" content="template language"
+
+	body
+		h1 Markup examples
+		div id="comment"   
+    
+		#haml this is a haml shortcut
+		
+		#id.class.class2 Bla Bla
+
+		div id="content" class="example1"
+		p Nest by indentation
+		
+		== yield	
+		
+		- unless items.empty?
+		table
+		- for item in items do
+			tr
+				td = item.name
+				td = item.price
+		- else
+		p
+			| No items found.  Please add some inventory.
+			  Thank you!
+
+	    div id="footer"
+			' Copyright © 2010 Andrew Stone
+
+		= render 'tracking_code'
+
+		javascript:
+			$(content).do_something();
+		css:
+			#hello {color: red;}
+	
+
+    

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<itemizer>
+	<recipe name="slim.tag">
+		<selector>slim tag:has-child(name:capture(name))</selector>
+		<subrecipes>
+			<include-root-recipes />
+		</subrecipes>
+	</recipe>
+</itemizer> 
