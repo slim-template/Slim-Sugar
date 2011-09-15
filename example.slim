@@ -3,15 +3,17 @@ html lang="en"
 	head
 		title Slim Core Example
 		meta name="keywords" content="template language"
-	body
+	body	
 		h1 Markup examples
+		
 		div id="" This is good  
-    
+		
 		#haml this is a haml shortcut
 		
 		#id.class.class2 Bla Bla
 		
 		div id="content" class="example1"
+		
 		p Nest by indentation
 		
 		p id="hello"
@@ -29,13 +31,13 @@ html lang="en"
 			| No items found.  Please add some inventory.
 			  Thank you!
 
-	    div id="footer"
+	 	div id="footer"
 			' Copyright © 2010 Andrew Stone
 
 		= render 'tracking_code'
-
 		javascript:
 			$(content).do_something();
 		css:
-			#hello {color: red;}
+	    	#hello {color: red;}
+	    
 	    

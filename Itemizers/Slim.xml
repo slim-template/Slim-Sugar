@@ -1,7 +1,13 @@
 <?xml version="1.0"?>
 <itemizer>
-	<recipe name="slim.block">
-		<selector>slim block:has-child(name:capture(name))</selector>
+	<recipe name="slim.tag">
+		<selector>slim item:has-child(tag-def:has-child(tag.inline-block:has-child(name:capture(name))))</selector>
+		<subrecipes>
+			<include-root-recipes />
+		</subrecipes>
+	</recipe>
+	<recipe name="slim.tag.shortcut">
+		<selector>slim item:has-child(tag-def:has-child(tag.shortcut:has-child(name:capture(name))))</selector>
 		<subrecipes>
 			<include-root-recipes />
 		</subrecipes>

@@ -2,53 +2,69 @@
 <syntax name="language-root.slim">
 
     <zones>
-        <include collection="tags" />      
-		<include collection="nested-static" /> 
+        <include collection="items" />      
         <include collection="strings" />
         <include collection="entities" />
     </zones>
     
     
     <library>	
-    	<collection name="tags">
+    	<collection name="items">
     		        
-	        <zone name="block.block-body">
+	        <zone name="item.item-body">
 				<starts-with>
-					<expression>^(?!\-)([a-zA-Z0-9:_-]+)(\s(?:\w+)(?:=)(?:"|')(?:\w+)(?:"|'))?+</expression>
-	        		<capture number="1" name="entity.name"/>
-	        		<capture number="2" name="attributes">
-	        			<subzones>
-	        				<include collection="tag-attributes" />
-	        			</subzones>
-	        		</capture>
+					<expression>^((?!\-)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
+					<capture number="1" name="tag-def">
+						<subzones>
+							<include collection="tags" />
+						</subzones>
+					</capture>
 	        	</starts-with>
 	        	<ends-with>^(?![ \t]|[ \t]*$)</ends-with>
 	        	<subzones>
-	        		<include collection="nested-tags" />
+	        		<include collection="nested-items" />
 	        	</subzones>
 	        </zone>
         </collection>
                 
-        <collection name="nested-tags">
-        	<zone name="block">
-        			<starts-with>
-	        			<expression>^([ \t]+)(?!\-)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)</expression>
-	        			<capture number="2" name="entity.name"/>
-	        			<capture number="3" name="attributes">
-	        				<subzones>
-	        					<include collection="tag-attributes" />
-	        				</subzones>
-	        			</capture>
-	        		</starts-with>
-        			<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
-        			<subzones name="block-body">
-        				<include collection="nested-tags" />
+		<collection name="nested-items">
+			<zone name="item">
+					<starts-with>
+		    			<expression>^([ \t]+)((?!\-)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
+		    			<capture number="2" name="tag-def">
+		    				<subzones>
+		    					<include collection="tags" />
+		    				</subzones>
+		    			</capture>
+		    		</starts-with>
+					<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
+					<subzones name="item-body">
+						<include collection="nested-items" />
+					</subzones>
+			</zone>
+		</collection>
+		
+        <collection name="tags">
+        	<zone name="tag.inline-block">
+        		<expression>^(?!\-)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)</expression>
+        		<capture number="1" name="entity.name"/>
+        		<capture number="2" name="attributes">
+        			<subzones>
+        				<include collection="tag-attributes" />
         			</subzones>
+        		</capture>
         	</zone>
+        	
+        	<zone name="tag.shortcut">
+        		<expression>^([#|\.])(\w+)(?:([#|\.])(\w+))*</expression>
+        		<capture number="1" name="punctuation.definition"/>
+        		<capture number="2" name="entity.name"/>
+        	</zone>
+        	
         </collection>
-        
+      
 <!--        <collection name="nested-static">
-        	<zone>
+        	<zone name="static-text">
         		<expression>^(?:[\s*]+)(\| |' )</expression>
         		<capture number="1" name="punctuation.definition" />
         	</zone>
