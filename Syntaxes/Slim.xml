@@ -4,8 +4,7 @@
     <zones>
         <include collection="tags" />
 		<include collection="nested-tags" />          
-		<include collection="nested-static" />
-		<include collection="tag-attributes" />   
+		<include collection="nested-static" /> 
         <include collection="strings" />
         <include collection="entities" />
     </zones>
@@ -13,60 +12,29 @@
     
     <library>	
     	<collection name="tags">
-	        <zone name="tag.block.slim">
-    			<expression>^(address|article|aside|audio|blockquote|body|canvas|caption|center|colgroup|dd|details|dir|div|dl|dt|embed|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hgroup|html|iframe|li|map|menu|noframes|noscript|object|ol|output|p|pre|progress|samp|section|table|tbody|td|textarea|tfoot|th|thead|title|tr|ul|video)( [\w+]=".")</expression>
-    			<capture number="1" name="entity.name"/>
-	        </zone>
-	        
-	        <zone name="tag.inline.slim">
-				<expression>^(a|abbr|acronym|big|cite|code|dfn|command|em|font|i|kbd|mark|meter|nav|q|s|small|span|strike|strong|sub|summary|sup|time|tt|u|var)\b</expression>
-				<capture number="1" name="entity.name"/>
-	        </zone>
-	        
-	        <zone name="tag.shortcut.slim">
-	        	<expression>^([#|\.])(\w+)(?:([#|\.])(\w+))*</expression>
-				<capture number="1" name="punctuation.definition"/>
-				<capture number="2" name="entity.name"/>
-	        </zone>
-	        
-	        <zone name="tag.filter.keyword.slim">
-	        		<expression>^(\w+)(:\s)</expression>
+    		        
+	        <zone name="tag.slim">
+	        		<expression>^(?!\-)([a-zA-Z0-9:_-]+)(\s(?:\w+)(?:=)(?:"|')(?:\w+)(?:"|'))?+</expression>
 	        		<capture number="1" name="entity.name"/>
-	        		<capture number="2" name="punctuation.definition"/>
+	        		<capture number="2" name="attributes">
+	        			<subzones>
+	        				<include collection="tag-attributes" />
+	        			</subzones>
+	        		</capture>
 	        </zone>
 	        
-	        <zone name="tag.other.slim">
-	        		<expression>^(?!\-)([a-zA-Z0-9:_-]+)</expression>
-	        		<capture number="1" name="entity.name"/>
-	        </zone> 
         </collection>
                 
         <collection name="nested-tags">
-        	<zone name="tag.block.slim">
-        		<expression>^(?:[\s*]+)(address|article|aside|audio|blockquote|body|canvas|caption|center|colgroup|dd|details|dir|div|dl|dt|embed|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hgroup|html|iframe|li|map|menu|noframes|noscript|object|ol|output|p|pre|progress|samp|section|table|tbody|td|textarea|tfoot|th|thead|title|tr|ul|video)( [\w+]=".")</expression>
-        		<capture number="1" name="entity.name"/>
-        	</zone>
         	
-        	<zone name="tag.inline.slim">
-        		<expression>^(?:[\s*]+)(a|abbr|acronym|big|cite|code|dfn|command|em|font|i|kbd|mark|meter|nav|q|s|small|span|strike|strong|sub|summary|sup|time|tt|u|var)\b</expression>
-        		<capture number="1" name="entity.name"/>
-        	</zone>
-        	
-        	<zone name="tag.shortcut.slim">
-        		<expression>^(?:[\s*]+)([#|\.])(\w+)(?:([#|\.])(\w+))*</expression>
-        		<capture number="1" name="punctuation.definition"/>
-        		<capture number="2" name="entity.name"/>
-        	</zone>
-        	
-        	<zone name="tag.filter.keyword.slim">
-        			<expression>^(?:[\s*]+)(\w+)(:\s)</expression>
+        	<zone name="tag.slim">
+        			<expression>^(?:[\s*]+)(?!\-)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)</expression>
         			<capture number="1" name="entity.name"/>
-        			<capture number="2" name="punctuation.definition"/>
-        	</zone>
-        	
-        	<zone name="tag.other.slim">
-        			<expression>^(?:[\s*]+)(?!\-)([a-zA-Z0-9:_-]+)</expression>
-        			<capture number="1" name="entity.name"/>
+        			<capture number="2" name="attributes">
+        				<subzones>
+        					<include collection="tag-attributes" />
+        				</subzones>
+        			</capture>
         	</zone>
         </collection>
         
