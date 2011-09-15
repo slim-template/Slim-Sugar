@@ -2,8 +2,7 @@
 <syntax name="language-root.slim">
 
     <zones>
-        <include collection="tags" />
-		<include collection="nested-tags" />          
+        <include collection="tags" />      
 		<include collection="nested-static" /> 
         <include collection="strings" />
         <include collection="entities" />
@@ -13,37 +12,47 @@
     <library>	
     	<collection name="tags">
     		        
-	        <zone name="tag.slim">
-	        		<expression>^(?!\-)([a-zA-Z0-9:_-]+)(\s(?:\w+)(?:=)(?:"|')(?:\w+)(?:"|'))?+</expression>
+	        <zone name="block.block-body">
+				<starts-with>
+					<expression>^(?!\-)([a-zA-Z0-9:_-]+)(\s(?:\w+)(?:=)(?:"|')(?:\w+)(?:"|'))?+</expression>
 	        		<capture number="1" name="entity.name"/>
 	        		<capture number="2" name="attributes">
 	        			<subzones>
 	        				<include collection="tag-attributes" />
 	        			</subzones>
 	        		</capture>
+	        	</starts-with>
+	        	<ends-with>^(?![ \t]|[ \t]*$)</ends-with>
+	        	<subzones>
+	        		<include collection="nested-tags" />
+	        	</subzones>
 	        </zone>
-	        
         </collection>
                 
         <collection name="nested-tags">
-        	
-        	<zone name="tag.slim">
-        			<expression>^(?:[\s*]+)(?!\-)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)</expression>
-        			<capture number="1" name="entity.name"/>
-        			<capture number="2" name="attributes">
-        				<subzones>
-        					<include collection="tag-attributes" />
-        				</subzones>
-        			</capture>
+        	<zone name="block">
+        			<starts-with>
+	        			<expression>^([ \t]+)(?!\-)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)</expression>
+	        			<capture number="2" name="entity.name"/>
+	        			<capture number="3" name="attributes">
+	        				<subzones>
+	        					<include collection="tag-attributes" />
+	        				</subzones>
+	        			</capture>
+	        		</starts-with>
+        			<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
+        			<subzones name="block-body">
+        				<include collection="nested-tags" />
+        			</subzones>
         	</zone>
         </collection>
         
-        <collection name="nested-static">
+<!--        <collection name="nested-static">
         	<zone>
         		<expression>^(?:[\s*]+)(\| |' )</expression>
         		<capture number="1" name="punctuation.definition" />
         	</zone>
-        </collection>
+        </collection>-->
         
         <collection name="tag-attributes">
         	<!--CSS embedded attributes-->
@@ -154,7 +163,6 @@
         		<expression>&amp;</expression>
         	</zone>
         </collection>
-        
         
     </library>
     
