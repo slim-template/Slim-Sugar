@@ -10,8 +10,7 @@
     
     
     <library>	
-    	<collection name="items">
-    		        
+    	<collection name="items">     
 	        <zone name="item.item-body">
 				<starts-with>
 					<expression>^((?!\-|doctype)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
@@ -64,12 +63,12 @@
         	
         </collection>
       
-<!--        <collection name="nested-static">
+        <collection name="nested-static">
         	<zone name="static-text">
         		<expression>^(?:[\s*]+)(\| |' )</expression>
         		<capture number="1" name="punctuation.definition" />
         	</zone>
-        </collection>-->
+        </collection>
         
         <collection name="tag-attributes">
         	<!--CSS embedded attributes-->

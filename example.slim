@@ -5,11 +5,10 @@ html lang="en"
 		meta name="keywords" content="template language"
 	body
 		h1 Markup examples
-		div id="" This is good
+		div id='' This is good
+			#haml this is a haml shortcut		
+			#id.class.class2 Bla Bla
 		
-		#haml this is a haml shortcut
-		
-		#id.class.class2 Bla Bla
 		
 			div id="content" class="example1"
 		
@@ -26,7 +25,7 @@ html lang="en"
 				td = item.price
 		- else
 		p
-			| No items found.  Please add some inventory.
+			| No items found. Please add some inventory.
 			  Thank you!
 			  
 		div id="footer"
@@ -37,4 +36,4 @@ html lang="en"
 		javascript:
 			$(content).do_something();
 		css:
-			#hello {color: red;}    
+			#hello {color: red;}
