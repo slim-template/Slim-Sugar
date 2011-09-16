@@ -5,6 +5,7 @@
         <include collection="items" />      
         <include collection="strings" />
         <include collection="entities" />
+        <include collection="declorations" />
     </zones>
     
     
@@ -13,7 +14,7 @@
     		        
 	        <zone name="item.item-body">
 				<starts-with>
-					<expression>^((?!\-)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
+					<expression>^((?!\-|doctype)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
 					<capture number="1" name="tag-def">
 						<subzones>
 							<include collection="tags" />
@@ -30,7 +31,7 @@
 		<collection name="nested-items">
 			<zone name="item">
 					<starts-with>
-		    			<expression>^([ \t]+)((?!\-)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
+		    			<expression>^([ \t]*)((?!\-|doctype)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
 		    			<capture number="2" name="tag-def">
 		    				<subzones>
 		    					<include collection="tags" />
@@ -177,6 +178,13 @@
         	</zone>
         	<zone name="invalid.illegal.bad-ampersand.slim">
         		<expression>&amp;</expression>
+        	</zone>
+        </collection>
+        <collection name="declorations">
+        	<zone name="document-decloration">
+        		<expression>((doctype)[\s]+([a-zA-Z0-9\.]+))\b</expression>
+        		<capture number="1" name="doctype.identifier" />
+        		<capture number="2" name="doctype.definition" />
         	</zone>
         </collection>
         

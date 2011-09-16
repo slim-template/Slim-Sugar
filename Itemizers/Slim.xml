@@ -6,8 +6,26 @@
 			<include-root-recipes />
 		</subrecipes>
 	</recipe>
+
+	<recipe name="slim.tag">
+		<start-selector>slim item:has-child(tag-def:has-child(tag.inline-block:has-child(name:capture(name))))</start-selector>
+		<end-selector>slim item-body</end-selector>
+	</recipe>
+	
 	<recipe name="slim.tag.shortcut">
 		<selector>slim item:has-child(tag-def:has-child(tag.shortcut:has-child(name:capture(name))))</selector>
+		<subrecipes>
+			<include-root-recipes />
+		</subrecipes>
+	</recipe>
+	
+	<recipe name="slim.tag.shortcut">
+		<start-selector>slim item:has-child(tag-def:has-child(tag.shortcut:has-child(name:capture(name))))</start-selector>
+		<end-selector>slim item-body</end-selector>
+	</recipe>
+	
+	<recipe name="slim.doctype.processing-instruction">
+		<selector>slim document-decloration:capture(name)</selector>
 		<subrecipes>
 			<include-root-recipes />
 		</subrecipes>
