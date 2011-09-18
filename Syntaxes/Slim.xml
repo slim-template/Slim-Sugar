@@ -1,19 +1,22 @@
 <?xml version="1.0"?>
 <syntax name="language-root.slim">
 
-    <zones>
-        <include collection="items" />      
+    <zones >
+        <include collection="items" />
+        <include collection="nested-items" />    
         <include collection="strings" />
         <include collection="entities" />
         <include collection="declorations" />
+        <include collection="static-text-items" />
+        <include collection="filters" />
     </zones>
     
-    
+<!-- Tag structure & def. Itemizer replacement hack (items & nested-items) and then a group of tag definitions -->
     <library>	
     	<collection name="items">     
 	        <zone name="item.item-body">
 				<starts-with>
-					<expression>^((?!\-|doctype)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
+					<expression>^((?!\-|doctype|(\w+:))([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
 					<capture number="1" name="tag-def">
 						<subzones>
 							<include collection="tags" />
@@ -23,14 +26,16 @@
 	        	<ends-with>^(?![ \t]|[ \t]*$)</ends-with>
 	        	<subzones>
 	        		<include collection="nested-items" />
+	        		<include collection="static-text-items" />
+	        		<include collection="filters" />
 	        	</subzones>
 	        </zone>
         </collection>
                 
-		<collection name="nested-items">
+		<collection name="nested-items" >
 			<zone name="item">
 					<starts-with>
-		    			<expression>^([ \t]*)((?!\-|doctype)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
+		    			<expression>^([ \t]+)((?!\-|doctype|(\w+:))([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
 		    			<capture number="2" name="tag-def">
 		    				<subzones>
 		    					<include collection="tags" />
@@ -40,6 +45,8 @@
 					<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
 					<subzones name="item-body">
 						<include collection="nested-items" />
+						<include collection="static-text-items" />
+						<include collection="filters" />
 					</subzones>
 			</zone>
 		</collection>
@@ -62,14 +69,42 @@
         	</zone>
         	
         </collection>
-      
-        <collection name="nested-static">
-        	<zone name="static-text">
-        		<expression>^(?:[\s*]+)(\| |' )</expression>
-        		<capture number="1" name="punctuation.definition" />
-        	</zone>
-        </collection>
         
+<!-- Static text including comments. -->
+	   	<collection name="static-text-items">
+	   		<zone name="static-text-item">
+	   				<starts-with>
+	   	    			<expression>^([ \t]+)?((\| |' ))</expression>
+	   	    		</starts-with>
+	   	    		<capture number="2" name="punctuation.definition" />
+	   	    		<ends-with>^(?!\1  \w)</ends-with>
+	   		</zone>
+	   		<zone name="comment.comment-text-item">
+	   				<starts-with>
+	   					<expression>^([ \t]+)?(?:(/ |/! ))</expression>
+	   				</starts-with>
+	   				<capture number="2" name="punctuation.definition" />
+	   				<ends-with>^(?!\1 {2,3}\w)</ends-with>
+	   		</zone>
+	   	</collection>        
+
+<!-- filters -->
+		<collection name="filters">
+			<zone name="filter-item">
+				<starts-with>
+					<expression>^([ \t]+)?(([\w]+)(:))</expression>
+					<capture number="2" name="filter.definition" />
+					<capture number="3" name="entity.name" />
+					<capture number="4" name="punctuation.definition" />
+				</starts-with>
+				<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
+				<subzones name="filter-body">
+					<include syntax="language-root.css" collection="properties"/>
+				</subzones>
+			</zone>
+		</collection>
+        
+<!-- tag attributes -->
         <collection name="tag-attributes">
         	<!--CSS embedded attributes-->
         	<zone>

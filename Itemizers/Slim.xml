@@ -13,7 +13,17 @@
 			<include-root-recipes />
 		</subrecipes>
 	</recipe>
-	
+	<recipe name="slim.filter">
+		<selector>slim filter-item:has-child(filter.definition:capture(name))</selector>
+		<subrecipes>
+			<include-root-recipes />
+		</subrecipes>
+	</recipe>
+
+	<recipe name="slim.comment">
+		<selector>slim comment-text-item:capture(name)</selector>
+	</recipe>
+		
 	<recipe name="slim.doctype.processing-instruction">
 		<selector>slim document-decloration:capture(name)</selector>
 		<subrecipes>
