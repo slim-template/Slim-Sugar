@@ -2,7 +2,7 @@
 <syntax name="language-root.slim">
 
     <zones >
-        <include collection="items" />
+<!--        <include collection="items" />-->
         <include collection="nested-items" />    
         <include collection="strings" />
         <include collection="entities" />
@@ -11,9 +11,9 @@
         <include collection="filters" />
     </zones>
     
-<!-- Tag structure & def. Itemizer replacement hack (items & nested-items) and then a group of tag definitions -->
+
     <library>	
-    	<collection name="items">     
+<!--    	<collection name="items">     
 	        <zone name="item.item-body">
 				<starts-with>
 					<expression>^((?!\-|doctype|(\w+:))([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
@@ -30,12 +30,13 @@
 	        		<include collection="filters" />
 	        	</subzones>
 	        </zone>
-        </collection>
-                
+        </collection>-->
+
+<!-- Tag structure and then a group of tag definitions -->                
 		<collection name="nested-items" >
 			<zone name="item">
 					<starts-with>
-		    			<expression>^([ \t]+)((?!\-|doctype|(\w+:))([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
+		    			<expression>^([ \t]+)?((?!\-|doctype|(\w+:))([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
 		    			<capture number="2" name="tag-def">
 		    				<subzones>
 		    					<include collection="tags" />
@@ -47,6 +48,7 @@
 						<include collection="nested-items" />
 						<include collection="static-text-items" />
 						<include collection="filters" />
+						<include syntax="language-root.ruby" collection="keywords" />
 					</subzones>
 			</zone>
 		</collection>
@@ -90,20 +92,53 @@
 
 <!-- filters -->
 		<collection name="filters">
-			<zone name="filter-item">
+			<zone name="css.filter">
 				<starts-with>
-					<expression>^([ \t]+)?(([\w]+)(:))</expression>
-					<capture number="2" name="filter.definition" />
+					<expression>^([ \t]+)?((css)(:))</expression>
+					<capture number="2" name="filter.definition" />				
 					<capture number="3" name="entity.name" />
 					<capture number="4" name="punctuation.definition" />
 				</starts-with>
 				<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
 				<subzones name="filter-body">
-					<include syntax="language-root.css" collection="properties"/>
+					<include syntax="language-root.css" />
 				</subzones>
 			</zone>
+			<zone name="javascript.filter">
+				<starts-with>
+					<expression>^([ \t]+)?((javascript)(:))</expression>
+					<capture number="2" name="filter.definition" />				
+					<capture number="3" name="entity.name" />
+					<capture number="4" name="punctuation.definition" />
+				</starts-with>
+				<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
+				<subzones name="filter-body">
+					<include syntax="language-root.js" />
+				</subzones>
+			</zone>
+			<zone name="markdown.filter">
+				<starts-with>
+					<expression>^([ \t]+)?((markdown)(:))</expression>
+					<capture number="2" name="filter.definition" />				
+					<capture number="3" name="entity.name" />
+					<capture number="4" name="punctuation.definition" />
+				</starts-with>
+				<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
+				<subzones name="filter-body">
+					<include syntax="language-root.markdown" />
+				</subzones>
+			</zone>
+			<zone name="other.filter">
+				<starts-with>
+					<expression>^([ \t]+)?((\w+)(:))</expression>
+					<capture number="2" name="filter.definition" />				
+					<capture number="3" name="entity.name" />
+					<capture number="4" name="punctuation.definition" />
+				</starts-with>
+				<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
+			</zone>	
 		</collection>
-        
+		
 <!-- tag attributes -->
         <collection name="tag-attributes">
         	<!--CSS embedded attributes-->

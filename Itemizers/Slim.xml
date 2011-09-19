@@ -13,11 +13,17 @@
 			<include-root-recipes />
 		</subrecipes>
 	</recipe>
-	<recipe name="slim.filter">
-		<selector>slim filter-item:has-child(filter.definition:capture(name))</selector>
+	
+<!--	<recipe name="slim.block-structure">
+		<start-selector>slim slim item:has-child(tag-def)</start-selector>
+		<end-selector>slim item-body</end-selector>
 		<subrecipes>
 			<include-root-recipes />
 		</subrecipes>
+	</recipe>-->
+
+	<recipe name="slim.filter">
+		<selector>slim filter:has-child(filter.definition:capture(name))</selector>
 	</recipe>
 
 	<recipe name="slim.comment">
@@ -26,8 +32,5 @@
 		
 	<recipe name="slim.doctype.processing-instruction">
 		<selector>slim document-decloration:capture(name)</selector>
-		<subrecipes>
-			<include-root-recipes />
-		</subrecipes>
 	</recipe>
 </itemizer> 
