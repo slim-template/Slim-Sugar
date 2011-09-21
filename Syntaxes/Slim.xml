@@ -2,41 +2,19 @@
 <syntax name="language-root.slim">
 
     <zones >
-<!--        <include collection="items" />-->
-        <include collection="nested-items" />    
+        <include collection="tag-items" />    
         <include collection="strings" />
         <include collection="entities" />
         <include collection="declorations" />
         <include collection="static-text-items" />
-        <include collection="filters" />
     </zones>
     
 
-    <library>	
-<!--    	<collection name="items">     
-	        <zone name="item.item-body">
-				<starts-with>
-					<expression>^((?!\-|doctype|(\w+:))([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
-					<capture number="1" name="tag-def">
-						<subzones>
-							<include collection="tags" />
-						</subzones>
-					</capture>
-	        	</starts-with>
-	        	<ends-with>^(?![ \t]|[ \t]*$)</ends-with>
-	        	<subzones>
-	        		<include collection="nested-items" />
-	        		<include collection="static-text-items" />
-	        		<include collection="filters" />
-	        	</subzones>
-	        </zone>
-        </collection>-->
-
-<!-- Tag structure and then a group of tag definitions -->                
-		<collection name="nested-items" >
+    <library>	         
+		<collection name="tag-items" >
 			<zone name="item">
 					<starts-with>
-		    			<expression>^([ \t]+)?((?!\-|doctype|(\w+:))([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
+		    			<expression>^([ \t]+)?((?!\-|doctype|\w+:)([a-zA-Z0-9:#\._-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
 		    			<capture number="2" name="tag-def">
 		    				<subzones>
 		    					<include collection="tags" />
@@ -45,7 +23,7 @@
 		    		</starts-with>
 					<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
 					<subzones name="item-body">
-						<include collection="nested-items" />
+						<include collection="tag-items" />
 						<include collection="static-text-items" />
 						<include collection="filters" />
 						<include syntax="language-root.ruby" collection="keywords" />
@@ -53,9 +31,10 @@
 			</zone>
 		</collection>
 		
-        <collection name="tags">
-        	<zone name="tag.inline-block">
-        		<expression>^(?!\-)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)</expression>
+        <collection name="tags">        	
+        	
+        	<zone name="tag.standard-attributes">
+        		<expression>(?!\w+#|\w+\.)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)</expression>
         		<capture number="1" name="entity.name"/>
         		<capture number="2" name="attributes">
         			<subzones>
@@ -64,10 +43,18 @@
         		</capture>
         	</zone>
         	
-        	<zone name="tag.shortcut">
-        		<expression>^([#|\.])(\w+)(?:([#|\.])(\w+))*</expression>
-        		<capture number="1" name="punctuation.definition"/>
-        		<capture number="2" name="entity.name"/>
+        	<zone name="tag.id.shortcut">
+        		<expression>(\w+)?((#\w+)(?:([\.])(\w+))*)</expression>
+        		<capture number="1" name="entity.name" />
+        		<capture number="2" name="shortcut-def" />
+        		<capture number="3" name="haml-id" />
+        	</zone>
+        	
+        	<zone name="tag.class.shortcut">
+        		<expression>(\w+)?((([\.])(\w+))*)</expression>
+        		<capture number="1" name="entity.name" />
+        		<capture number="2" name="shortcut-def" />
+        		<capture number="3" name="haml-class" />
         	</zone>
         	
         </collection>
@@ -86,13 +73,13 @@
 	   					<expression>^([ \t]+)?(?:(/ |/! ))</expression>
 	   				</starts-with>
 	   				<capture number="2" name="punctuation.definition" />
-	   				<ends-with>^(?!\1 {2,3}\w)</ends-with>
+	   				<ends-with>^(?!\1 {2,3}.)</ends-with>
 	   		</zone>
 	   	</collection>        
 
 <!-- filters -->
 		<collection name="filters">
-			<zone name="css.filter">
+		<zone name="css.filter">
 				<starts-with>
 					<expression>^([ \t]+)?((css)(:))</expression>
 					<capture number="2" name="filter.definition" />				

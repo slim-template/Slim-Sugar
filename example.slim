@@ -5,13 +5,14 @@ html lang="en"
 		meta name="keywords" content="template language"	
 	body
 		h1 Markup examples
-		div
 		div id='' This is good
-			#haml this is a haml shortcut
-			#id.class.class2 Haml shortcut with a bunch of classes
+			code#haml haml shortcut
+			.class.class Haml shortcuts with classes.
+			#haml simple haml shortcut
 			div id="content" class="example1"
-		p Nest by indentation
-		p id="hello"	
+				p Nest by indentation
+				p id="hello" 
+					| hello
 		div id="filters"
 			css: 
 				#mark { padding: 10px; }
@@ -27,16 +28,15 @@ html lang="en"
 			  	  
 			/! html comment
 			   Bla bla bla
-		div id="list"
+		bla id="list"
 			ul
 				li = item_name
 				li = javascript_include_tag 'jquery',   \
 				                         'jquery-ui',	\
 				                       	 'application'
-		markdown:
-			#Header
-				Hello from #{"Markdown!"}
-				Second Line!                       	 
-		
+			 markdown:
+			 	#Header
+			 	Hello from #{"Markdown!"}
+			 		
 		div id="content"
 			== yield

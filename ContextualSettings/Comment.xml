@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+<!--	<setting name="comment-multiline-start">
+		<language-context>slim</language-context>
+		<no-value/>
+	</setting>
+
+	<setting name="comment-multiline-end">
+		<language-context>slim</language-context>
+		<no-value/>
+	</setting>
+
+	<setting name="comment-multiline-end-inert">
+		<language-context>slim</language-context>
+		<no-value/>
+	</setting> -->
+
+<!--	<setting name="comment-singleline-start">
+		<language-context>slim</language-context>
+		<value>/ </value>
+	</setting>-->
+</settings>
