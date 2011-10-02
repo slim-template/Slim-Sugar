@@ -12,14 +12,22 @@ html lang="en"
 			div id="content" class="example1"
 				p Nest by indentation
 				p id="hello" 
-					| hello
+					| This is static text.
+					  As long as you use the space after the '|' line as a margin.
+					  Each line will continue to be text.
 		div id="filters"
 			css: 
 				#mark { padding: 10px; }
+			
 			javascript:
 				function jump(){
 					alert('Jump!')
 				};
+			
+			markdown:
+				#Header
+				Hello from #{"Markdown!"}
+				
 			fake:
 				Fake filter content.
 		div id="comments"		
@@ -27,16 +35,12 @@ html lang="en"
 			  second line  
 			  	  
 			/! html comment
-			   Bla bla bla
-		bla id="list"
-			ul
-				li = item_name
-				li = javascript_include_tag 'jquery',   \
-				                         'jquery-ui',	\
-				                       	 'application'
-			 markdown:
-			 	#Header
-			 	Hello from #{"Markdown!"}
-			 		
+			   Bla bla bla	
+		div id="list"
+				ul  
+				 	li = item_name
+					li = javascript_include_tag 'jquery',   \
+											'jquery-ui',	\
+					                   	 	'application'
 		div id="content"
-			== yield
+						== yield

@@ -15,13 +15,13 @@
 		</subrecipes>
 	</recipe>
 	
-<!--	<recipe name="slim.tag-structure">
+	<recipe name="slim.tag-structure">
 		<start-selector>slim slim item:has-child(tag-def)</start-selector>
 		<end-selector>slim item-body</end-selector>
 		<subrecipes>
 			<include-root-recipes />
 		</subrecipes>
-	</recipe>-->
+	</recipe>
 
 	<recipe name="slim.filter">
 		<selector>slim filter:has-child(filter.definition:capture(name))</selector>
