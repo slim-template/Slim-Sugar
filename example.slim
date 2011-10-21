@@ -6,6 +6,7 @@ html lang="en"
 	body
 		h1 Markup examples
 		div id='' This is good
+			a href="mailto:john.brewer@peninsuladailynews.com"
 			code#haml haml shortcut
 			.class.class Haml shortcuts with classes.
 			#haml simple haml shortcut
@@ -37,10 +38,10 @@ html lang="en"
 			/! html comment
 			   Bla bla bla	
 		div id="list"
-				ul  
-				 	li = item_name
-					li = javascript_include_tag 'jquery',   \
-											'jquery-ui',	\
-					                   	 	'application'
+			ul  
+			 	li = item_name
+				li = javascript_include_tag 'jquery',   \
+										'jquery-ui',	\
+				                   	 	'application'
 		div id="content"
-						== yield
+			== yield

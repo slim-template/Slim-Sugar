@@ -7,14 +7,7 @@
 			<include-root-recipes />
 		</subrecipes>
 	</recipe>
-		
-	<recipe name="slim.tag.shortcut">
-		<selector>slim item:has-child(tag-def:has-child(tag.shortcut:has-child(name:capture(name)))), slim item:has-child(tag-def:has-child(tag.shortcut:has-child(shortcut-def:has-child(haml-id:capture(name))))), slim item:has-child(tag-def:has-child(tag.shortcut:has-child(shortcut-def:has-child(haml-class:capture(name)))))</selector>
-		<subrecipes>
-			<include-root-recipes />
-		</subrecipes>
-	</recipe>
-	
+
 	<recipe name="slim.tag-structure">
 		<start-selector>slim slim item:has-child(tag-def)</start-selector>
 		<end-selector>slim item-body</end-selector>

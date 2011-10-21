@@ -7,6 +7,7 @@
         <include collection="entities" />
         <include collection="declorations" />
         <include collection="static-text-items" />
+        <include collection="filters" />
     </zones>
     
 
@@ -14,7 +15,7 @@
 		<collection name="tag-items" >
 			<zone name="item">
 					<starts-with>
-		    			<expression>^([ \t]+)?((?!\-|doctype|\w+:)([a-zA-Z0-9:#\._-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
+		    			<expression>^([ \t]+)?((?!\-|doctype|\w+:)([a-zA-Z0-9:#\._-]+)((?:\s+[\w]+[=]["|']([ /\w\d:@\.\-_\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
 		    			<capture number="2" name="tag-def">
 		    				<subzones>
 		    					<include collection="tags" />
@@ -23,10 +24,17 @@
 		    		</starts-with>
 					<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
 					<subzones name="item-body">
-						<include collection="tag-items" />
+<!--						<include syntax="language-root.ruby" collection="keywords" />
+						<include syntax="language-root.ruby" collection="strings" />
+						<include syntax="language-root.ruby" collection="regex" />
+						<include syntax="language-root.ruby" collection="numbers" />
+						<include syntax="language-root.ruby" collection="variables" />
+						<include syntax="language-root.ruby" collection="constants" />
+						<include syntax="language-root.ruby" collection="operators" />
+						<include syntax="language-root.ruby" collection="punctuation" />-->
+						<include collection="tag-items" />    
 						<include collection="static-text-items" />
 						<include collection="filters" />
-						<include syntax="language-root.ruby" collection="keywords" />
 					</subzones>
 			</zone>
 		</collection>
@@ -34,7 +42,7 @@
         <collection name="tags">        	
         	
         	<zone name="tag.standard-attributes">
-        		<expression>(?!\w+#|\w+\.)([a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ \w\d:_-\{\}]+)?["|'])*)</expression>
+        		<expression><!--(?!\w+#|\w+\.)-->([#.a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ /@\.\w\d:_\-\{\}]+)?["|'])*)</expression>
         		<capture number="1" name="entity.name"/>
         		<capture number="2" name="attributes">
         			<subzones>
@@ -42,21 +50,6 @@
         			</subzones>
         		</capture>
         	</zone>
-        	
-        	<zone name="tag.id.shortcut">
-        		<expression>(\w+)?((#\w+)(?:([\.])(\w+))*)</expression>
-        		<capture number="1" name="entity.name" />
-        		<capture number="2" name="shortcut-def" />
-        		<capture number="3" name="haml-id" />
-        	</zone>
-        	
-        	<zone name="tag.class.shortcut">
-        		<expression>(\w+)?((([\.])(\w+))*)</expression>
-        		<capture number="1" name="entity.name" />
-        		<capture number="2" name="shortcut-def" />
-        		<capture number="3" name="haml-class" />
-        	</zone>
-        	
         </collection>
         
 <!-- Static text including comments. -->
@@ -79,52 +72,52 @@
 
 <!-- filters -->
 		<collection name="filters">
-		<zone name="css.filter">
-				<starts-with>
-					<expression>^([ \t]+)?((css)(:))</expression>
-					<capture number="2" name="filter.definition" />				
-					<capture number="3" name="entity.name" />
-					<capture number="4" name="punctuation.definition" />
-				</starts-with>
-				<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
-				<subzones name="filter-body">
-					<include syntax="language-root.css" />
-				</subzones>
-			</zone>
-			<zone name="javascript.filter">
-				<starts-with>
-					<expression>^([ \t]+)?((javascript)(:))</expression>
-					<capture number="2" name="filter.definition" />				
-					<capture number="3" name="entity.name" />
-					<capture number="4" name="punctuation.definition" />
-				</starts-with>
-				<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
-				<subzones name="filter-body">
-					<include syntax="language-root.js" />
-				</subzones>
-			</zone>
-			<zone name="markdown.filter">
-				<starts-with>
-					<expression>^([ \t]+)?((markdown)(:))</expression>
-					<capture number="2" name="filter.definition" />				
-					<capture number="3" name="entity.name" />
-					<capture number="4" name="punctuation.definition" />
-				</starts-with>
-				<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
-				<subzones name="filter-body">
-					<include syntax="language-root.markdown" />
-				</subzones>
-			</zone>
-			<zone name="other.filter">
-				<starts-with>
-					<expression>^([ \t]+)?((\w+)(:))</expression>
-					<capture number="2" name="filter.definition" />				
-					<capture number="3" name="entity.name" />
-					<capture number="4" name="punctuation.definition" />
-				</starts-with>
-				<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
-			</zone>	
-		</collection>
+			<zone name="css.filter">
+					<starts-with>
+						<expression>^([ \t]+)?((css)(:))</expression>
+						<capture number="2" name="filter.definition" />				
+						<capture number="3" name="entity.name" />
+						<capture number="4" name="punctuation.definition" />
+					</starts-with>
+					<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
+					<subzones name="filter-body">
+						<include syntax="language-root.css" />
+					</subzones>
+				</zone>
+				<zone name="javascript.filter">
+					<starts-with>
+						<expression>^([ \t]+)?((javascript)(:))</expression>
+						<capture number="2" name="filter.definition" />				
+						<capture number="3" name="entity.name" />
+						<capture number="4" name="punctuation.definition" />
+					</starts-with>
+					<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
+					<subzones name="filter-body">
+						<include syntax="language-root.js" />
+					</subzones>
+				</zone>
+				<zone name="markdown.filter">
+					<starts-with>
+						<expression>^([ \t]+)?((markdown)(:))</expression>
+						<capture number="2" name="filter.definition" />				
+						<capture number="3" name="entity.name" />
+						<capture number="4" name="punctuation.definition" />
+					</starts-with>
+					<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
+					<subzones name="filter-body">
+						<include syntax="language-root.markdown" />
+					</subzones>
+				</zone>
+				<zone name="other.filter">
+					<starts-with>
+						<expression>^([ \t]+)?((\w+)(:))</expression>
+						<capture number="2" name="filter.definition" />				
+						<capture number="3" name="entity.name" />
+						<capture number="4" name="punctuation.definition" />
+					</starts-with>
+					<ends-with>^(?!\1[ \t]|[ \t]*$)</ends-with>
+				</zone>	
+			</collection>
 		
 <!-- tag attributes -->
         <collection name="tag-attributes">
