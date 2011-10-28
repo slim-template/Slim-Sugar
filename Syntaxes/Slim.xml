@@ -15,7 +15,7 @@
 		<collection name="tag-items" >
 			<zone name="item">
 					<starts-with>
-		    			<expression>^([ \t]+)?((?!\-|doctype|\w+:)([a-zA-Z0-9:#\._-]+)((?:\s+[\w]+[=]["|']([ /\w\d:@\.\-_\{\}]+)?["|'])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
+		    			<expression>^([ \t]+)?((?!\-|doctype|\w+:)([a-zA-Z0-9:#\._\-]+)((?:\s+[\w\-]+[=]["|'|\(]([ /@\.\w\d,:;=_\-\{\}\[\]()]+)?["|'|\)])*)|(([#|\.])(\w+)(?:([#|\.])(\w+))*))</expression>
 		    			<capture number="2" name="tag-def">
 		    				<subzones>
 		    					<include collection="tags" />
@@ -40,9 +40,8 @@
 		</collection>
 		
         <collection name="tags">        	
-        	
         	<zone name="tag.standard-attributes">
-        		<expression><!--(?!\w+#|\w+\.)-->([#.a-zA-Z0-9:_-]+)((?:\s+[\w]+[=]["|']([ /@\.\w\d:_\-\{\}]+)?["|'])*)</expression>
+        		<expression>([#.a-zA-Z0-9:_\-]+)((?:\s+[\w\-]+[=]["|'\(]([ /@\.\w\d,:;=_\-\{\}\[\]()]+)?["|'|\)])*)</expression>
         		<capture number="1" name="entity.name"/>
         		<capture number="2" name="attributes">
         			<subzones>
